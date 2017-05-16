@@ -34,7 +34,21 @@ Suggested milestones for incremental development:
  -Fix main() to use the extract_names list
 """
 
-_year_re = re.compile(r'<h3 align="center">Popularity in ((?P<year>\d+))')
+_year_re = re.compile(r'<h3 align="center">Popularity in (?P<year>\d+)')
+_name_rank_re = re.compile(
+    r'<tr align="right"><td>(?P<rank>\d+)</td><td>(?P<male>\w+)</td><td>('
+    r'?P<female>\w+)</td>')
+
+
+def _find_names(f):
+    for line in f:
+        match = _name_rank_re.search(line)
+        if match:
+            rank = match.group('rank')
+            female = match.group('female')
+            yield f'{female} {rank}'
+            male = match.group('male')
+            yield f'{male} {rank}'
 
 
 def extract_names(filename):
@@ -47,6 +61,7 @@ def extract_names(filename):
     # +++your code here+++
     with open(filename, 'r', encoding='utf8') as f:
         yield from _find_year(f)
+        yield from _find_names(f)
 
 
 def _find_year(f):
