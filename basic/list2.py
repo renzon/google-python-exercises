@@ -44,7 +44,7 @@ def linear_merge(list1, list2):
             yield e1
             yield from iter1
         while True:
-            if e1 < e2:
+            if e1 <= e2:
                 yield e1
                 try:
                     e1 = next(iter1)
@@ -52,12 +52,7 @@ def linear_merge(list1, list2):
                     yield e2
                     break
             else:
-                yield e2
-                try:
-                    e2 = next(iter2)
-                except StopIteration:
-                    yield e1
-                    break
+                e1, e2, iter1, iter2 = e2, e1, iter2, iter1
         yield from chain(iter1, iter2)
 
     return list(lazy(iter(list1), iter(list2)))
