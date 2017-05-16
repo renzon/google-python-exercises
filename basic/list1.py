@@ -21,6 +21,9 @@
 # strings where the string length is 2 or more and the first
 # and last chars of the string are the same.
 # Note: python does not have a ++ operator, but += works.
+from itertools import chain
+
+
 def match_ends(words):
     def count_len_above_1_same_last_first_char(s):
         if len(s) > 1 and s[0] == s[-1]:
@@ -38,8 +41,13 @@ def match_ends(words):
 # Hint: this can be done by making 2 lists and sorting each of them
 # before combining them.
 def front_x(words):
-    # +++your code here+++
-    return
+    def start_with_x(s):
+        return s[0] == 'x'
+
+    result = sorted(filter(start_with_x, words))
+    non_x_strings = filter(lambda s: not start_with_x(s), words)
+    result.extend(sorted(non_x_strings))
+    return result
 
 
 # C. sort_last
