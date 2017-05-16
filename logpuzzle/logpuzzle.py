@@ -6,17 +6,19 @@
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
 
-import os
 import re
 import sys
-import urllib
 
 """Logpuzzle exercise
 Given an apache logfile, find the puzzle urls and download the images.
 
 Here's what a puzzle url looks like:
-10.254.254.28 - - [06/Aug/2007:00:13:48 -0700] "GET /~foo/puzzle-bar-aaab.jpg HTTP/1.0" 302 528 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
+10.254.254.28 - - [06/Aug/2007:00:13:48 -0700] "GET 
+/~foo/puzzle-bar-aaab.jpg HTTP/1.0" 302 528 "-" "Mozilla/5.0 (Windows; U; 
+Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
 """
+
+_url_re = re.compile(r'(?P<ip>(\d+\.){3}\d+).*?"GET (?P<img_path>/.*?\.jpg)')
 
 
 def read_urls(filename):
@@ -24,7 +26,19 @@ def read_urls(filename):
     extracting the hostname from the filename itself.
     Screens out duplicate urls and returns the urls sorted into
     increasing order."""
-    # +++your code here+++
+
+    def lazy():
+        with open(filename, 'r', encoding='utf8') as f:
+            for line in f:
+                match = _url_re.search(line)
+                if not match:
+                    continue
+                ip=match.group('ip')
+                img_path=match.group('img_path')
+
+                yield f'http://{ip}{img_path}'
+
+    return list(lazy())
 
 
 def download_images(img_urls, dest_dir):
@@ -35,7 +49,7 @@ def download_images(img_urls, dest_dir):
     with an img tag to show each local image file.
     Creates the directory if necessary.
     """
-    # +++your code here+++
+    print(img_urls)
 
 
 def main():
