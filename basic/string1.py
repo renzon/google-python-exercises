@@ -23,6 +23,9 @@
 # instead of the actual count.
 # So donuts(5) returns 'Number of donuts: 5'
 # and donuts(23) returns 'Number of donuts: many'
+from itertools import chain
+
+
 def donuts(count):
     if count >= 10:
         count = 'many'
@@ -50,8 +53,13 @@ def both_ends(s):
 # Hint: s.replace(stra, strb) returns a version of string s
 # where all instances of stra have been replaced by strb.
 def fix_start(s):
-    # +++your code here+++
-    return
+    iter_s = iter(s)
+    first_char = next(iter_s)
+
+    def char_or_asterisc(c):
+        return '*' if c == first_char else c
+
+    return ''.join(chain(first_char, map(char_or_asterisc, iter_s)))
 
 
 # D. MixUp
