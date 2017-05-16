@@ -13,9 +13,18 @@
 # all adjacent == elements have been reduced to a single element,
 # so [1, 2, 2, 3] returns [1, 2, 3]. You may create a new list or
 # modify the passed in list.
+from itertools import chain, tee
+
+
 def remove_adjacent(nums):
-    # +++your code here+++
-    return
+    def lazy_solution(seq):
+        seq_1, seq_2 = tee(seq)
+        shifted_seq = chain([None], seq_1)
+        for previous, current in zip(shifted_seq, seq_2):
+            if current != previous:
+                yield current
+
+    return list(lazy_solution(nums))
 
 
 # E. Given two lists sorted in increasing order, create and return a merged
