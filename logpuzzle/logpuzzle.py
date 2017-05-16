@@ -33,8 +33,8 @@ def read_urls(filename):
                 match = _url_re.search(line)
                 if not match:
                     continue
-                ip=match.group('ip')
-                img_path=match.group('img_path')
+                ip = match.group('ip')
+                img_path = match.group('img_path')
 
                 yield f'http://{ip}{img_path}'
 
