@@ -6,8 +6,8 @@
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
 
-import sys
 import re
+import sys
 
 """Baby Names exercise
 
@@ -34,15 +34,32 @@ Suggested milestones for incremental development:
  -Fix main() to use the extract_names list
 """
 
+_year_re = re.compile(r'<h3 align="center">Popularity in ((?P<year>\d+))')
+
 
 def extract_names(filename):
     """
-    Given a file name for baby.html, returns a list starting with the year string
+    Given a file name for baby.html, returns a list starting with the year 
+    string
     followed by the name-rank strings in alphabetical order.
     ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
     """
     # +++your code here+++
-    return
+    with open(filename, 'r', encoding='utf8') as f:
+        yield from _find_year(f)
+
+
+def _find_year(f):
+    for line in f:
+        match = _year_re.search(line)
+        if match:
+            yield match.group('year')
+            return
+
+
+def all_ranks_data(input_files):
+    for f in input_files:
+        yield from extract_names(f)
 
 
 def main():
@@ -56,14 +73,17 @@ def main():
         sys.exit(1)
 
     # Notice the summary flag and remove it from args if it is present.
-    summary = False
     if args[0] == '--summaryfile':
-        summary = True
+        del args[0]
+        output_file = args[0]
         del args[0]
 
-        # +++your code here+++
-        # For each filename, get the names, then either print the text output
-        # or write it to a summary file
+        with open(output_file, 'w', encoding='utf8') as out:
+            for data in all_ranks_data(args):
+                out.writelines(data)
+
+    for data in all_ranks_data(args):
+        print(data)
 
 
 if __name__ == '__main__':
