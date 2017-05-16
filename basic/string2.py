@@ -46,8 +46,13 @@ def not_bad(s):
 # Given 2 strings, a and b, return a string of the form
 #  a-front + b-front + a-back + b-back
 def front_back(a, b):
-    # +++your code here+++
-    return
+    def first_half(s):
+        return s[:(len(s) + 1) // 2]
+
+    def second_half(s):
+        return s[(len(s) + 1) // 2:]
+
+    return first_half(a) + first_half(b) + second_half(a) + second_half(b)
 
 
 # Simple provided test() function used in main() to print
