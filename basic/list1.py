@@ -22,8 +22,12 @@
 # and last chars of the string are the same.
 # Note: python does not have a ++ operator, but += works.
 def match_ends(words):
-    # +++your code here+++
-    return
+    def count_len_above_1_same_last_first_char(s):
+        if len(s) > 1 and s[0] == s[-1]:
+            return 1
+        return 0
+
+    return sum(map(count_len_above_1_same_last_first_char, words))
 
 
 # B. front_x
