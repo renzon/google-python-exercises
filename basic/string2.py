@@ -16,6 +16,9 @@
 # add 'ly' instead.
 # If the string length is less than 3, leave it unchanged.
 # Return the resulting string.
+import re
+
+
 def verbing(s):
     if len(s) < 3:
         return s
@@ -32,8 +35,7 @@ def verbing(s):
 # So 'This dinner is not that bad!' yields:
 # This dinner is good!
 def not_bad(s):
-    # +++your code here+++
-    return
+    return re.sub(r'not.*?bad', 'good', s)
 
 
 # F. front_back
