@@ -24,8 +24,9 @@
 # So donuts(5) returns 'Number of donuts: 5'
 # and donuts(23) returns 'Number of donuts: many'
 def donuts(count):
-    # +++your code here+++
-    return
+    if count >= 10:
+        count = 'many'
+    return f'Number of donuts: {count}'
 
 
 # B. both_ends
@@ -78,7 +79,8 @@ def test(got, expected):
 # using test() to check if each result is correct or not.
 def main():
     print('donuts')
-    # Each line calls donuts, compares its result to the expected for that call.
+    # Each line calls donuts, compares its result to the expected for that
+    # call.
     test(donuts(4), 'Number of donuts: 4')
     test(donuts(9), 'Number of donuts: 9')
     test(donuts(10), 'Number of donuts: many')

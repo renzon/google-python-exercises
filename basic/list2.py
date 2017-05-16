@@ -63,7 +63,7 @@ def linear_merge(list1, list2):
     return list(lazy(iter(list1), iter(list2)))
 
 
-# Note: the solution above is kind of cute, but unforunately list.pop(0)
+# Note: the solution above is kind of cute, but unfortunately list.pop(0)
 # is not constant time with the standard python list implementation, so
 # the above is not strictly linear time.
 # An alternate approach uses pop(-1) to remove the endmost elements
