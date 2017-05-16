@@ -32,8 +32,35 @@ def remove_adjacent(nums):
 # Ideally, the solution should work in "linear" time, making a single
 # pass of both lists.
 def linear_merge(list1, list2):
-    # +++your code here+++
-    return
+    def lazy(iter1, iter2):
+
+        try:
+            e1 = next(iter1)
+        except StopIteration:
+            yield from iter2
+        try:
+            e2 = next(iter2)
+        except StopIteration:
+            yield e1
+            yield from iter1
+        while True:
+            if e1 < e2:
+                yield e1
+                try:
+                    e1 = next(iter1)
+                except StopIteration:
+                    yield e2
+                    break
+            else:
+                yield e2
+                try:
+                    e2 = next(iter2)
+                except StopIteration:
+                    yield e1
+                    break
+        yield from chain(iter1, iter2)
+
+    return list(lazy(iter(list1), iter(list2)))
 
 
 # Note: the solution above is kind of cute, but unforunately list.pop(0)
