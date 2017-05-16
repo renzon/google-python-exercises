@@ -36,9 +36,8 @@ Optional: define a helper function to avoid code duplication inside
 print_words() and print_top().
 
 """
-
+import operator
 import sys
-
 
 # +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
@@ -54,7 +53,7 @@ from collections import Counter
 
 
 def _calculate_frequency(filename):
-    counter=Counter()
+    counter = Counter()
     with open(filename) as file:
         for line in file:
             counter.update(map(str.lower, line.split()))
@@ -64,6 +63,15 @@ def _calculate_frequency(filename):
 def print_words(filename):
     frequency_counter = _calculate_frequency(filename)
     for word, frequency in sorted(frequency_counter.items()):
+        print(word, frequency)
+
+
+def print_top(filename):
+    frequency_counter = _calculate_frequency(filename)
+    most_common = frequency_counter.most_common(20)
+    most_common = sorted(
+        frequency_counter.items(), key=operator.itemgetter(1), reverse=True)
+    for word, frequency in most_common:
         print(word, frequency)
 
 
