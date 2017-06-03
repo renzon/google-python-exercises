@@ -13,13 +13,13 @@ def cat_dog(s):
 
     """
     last_3_chars = deque(maxlen=3)
-    CAT_DEQUE = deque('cat')
-    DOG_DEQUE = deque('dog')
+    cat = deque('cat')
+    dog = deque('dog')
     count = 0
     for c in s:
         last_3_chars.append(c)
-        if last_3_chars == CAT_DEQUE:
+        if last_3_chars == cat:
             count += 1
-        elif last_3_chars == DOG_DEQUE:
+        elif last_3_chars == dog:
             count -= 1
     return count == 0
