@@ -1,4 +1,6 @@
+import re
 from collections import deque
+from itertools import zip_longest
 
 
 def cat_dog(s):
@@ -109,3 +111,20 @@ def cat_dog(s):
         return True
 
     return not (has_next(cat_search) or has_next(dog_search))
+
+
+def cat_dog(s):
+    """Solution of problem at http://codingbat.com/prob/p164876
+
+    >>> cat_dog('catdog')
+    True
+    >>> cat_dog('catcat')
+    False
+    >>> cat_dog('1cat1cadodog')
+    True
+
+    """
+    cat_search = re.finditer('cat', s)
+    dog_search = re.finditer('dog', s)
+    pairs_search = zip_longest(cat_search, dog_search, fillvalue=False)
+    return all(has_cat and has_dog for has_cat, has_dog in pairs_search)
